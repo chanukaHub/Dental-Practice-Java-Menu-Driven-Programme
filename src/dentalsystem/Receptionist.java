@@ -37,11 +37,6 @@ public class Receptionist extends Staff {
 
     @Override
     public String toString() {
-        return "Receptionist{" + "courseAttendedDate=" + courseAttendedDate + ", courseProvider=" + courseProvider + '}';
+        return super.toString() + ", courseAttendedDate=" + courseAttendedDate + ", courseProvider=" + courseProvider ;
     }
-
-   
-    
-    
-    
 }

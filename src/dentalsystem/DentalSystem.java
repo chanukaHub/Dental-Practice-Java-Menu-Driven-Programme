@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 public class DentalSystem {
 
-    
+    private static int staffCount=0;
     private static ArrayList<Address> addressList = new ArrayList<Address>();
     private static ArrayList<Appointment> appointmentList = new ArrayList<Appointment>();
     private static ArrayList<Dentist> dentistList = new ArrayList<Dentist>();
@@ -63,7 +63,10 @@ public class DentalSystem {
                 break;
             case 5:
                 displayDentistList();
-        
+                break;
+            case 6:
+                displayReceptionistList();
+                break;
         }
     }
 
@@ -166,11 +169,65 @@ public class DentalSystem {
                 System.out.println("Invalid date format use yyyy-MM-dd");
             }
         }
-        dentistList.add(new Dentist(qulification, councilNumber, date2, 1000, name, address, gender, telephone, nextOfKin));
+        
+        staffCount++;
+        dentistList.add(new Dentist(qulification, councilNumber, date2, (1000+staffCount), name, address, gender, telephone, nextOfKin));
     }
 
     private static void addReceptionist() {
+        String name, gender, telephone, nextOfKin, courseProvider,date,addressNo,addressLane,addressTown;
+        Date courseAttendedDate=null;
+        Address address;
+        Scanner myScanner = new Scanner(System.in);
+        System.out.println("Name:");
+        name = myScanner.nextLine();
         
+        System.out.println("Enter Address\nNo:");
+        addressNo = myScanner.nextLine();
+        System.out.println("Lane:");
+        addressLane= myScanner.nextLine();
+        System.out.println("Town:");
+        addressTown= myScanner.nextLine();
+        address = new Address(addressNo,addressLane,addressTown);
+        
+        System.out.println("Enter Gender:");
+        gender = myScanner.nextLine();
+        
+        while(true) {
+        System.out.println("Phone Number:");
+        telephone= myScanner.nextLine();
+        String patterns = "\\d{10}|(?:\\d{3}-){2}\\d{4}|\\(\\d{3}\\)\\d{3}-?\\d{4}";
+        //matches 1234567890 , 123-456-7890 , (123)456-7890 or (123)4567890
+        Pattern pattern = Pattern.compile(patterns);
+        
+        Matcher matcher = pattern.matcher(telephone);
+        if (matcher.matches()) {
+            break;
+        }else{
+            System.out.println("Phone Number Format invalid ");
+        }}
+        
+        System.out.println("enter next of kin:");
+        nextOfKin = myScanner.nextLine();
+        
+        while(true){
+            System.out.println("Course Attended Date: ");
+            date = myScanner.nextLine();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                //Parsing the String
+                courseAttendedDate = dateFormat.parse(date);
+                break;
+            } catch (ParseException e) {
+                System.out.println("Invalid date format use yyyy-MM-dd");
+            }
+        }
+        
+        System.out.println("Enter Course Provider:");
+        courseProvider = myScanner.nextLine();
+        
+        staffCount++;
+        receptionistList.add(new Receptionist((1000+staffCount), name, address, gender, telephone, nextOfKin, courseAttendedDate, courseProvider));
     }
 
     private static int stopSystem() {
@@ -180,14 +237,22 @@ public class DentalSystem {
     private static void displayDentistList() {
         System.out.println("Dentist List\n________________________________\n");
         for(int i =0; i< dentistList.size(); i++){
-            System.out.println(i+1+". "+ dentistList.get(i).toString());
+            System.out.println(i+1 +". "+ dentistList.get(i).toString());
         }
-        waitForEnter();
-        
+        waitForEnter(); 
     }
+    
+    private static void displayReceptionistList() {
+        System.out.println("Receptionist List\n________________________________\n");
+        for(int i =0; i< receptionistList.size(); i++){
+            System.out.println(i+1 +". "+ receptionistList.get(i).toString());
+        }
+        waitForEnter(); 
+    }
+    
     public static void waitForEnter() {
         Scanner myScanner = new Scanner(System.in);
-        System.out.print("Press any key to continue . . . ");
+        System.out.print("\nPress any key to continue . . . ");
         myScanner.nextLine();
         cleanScreean();
     }
@@ -199,5 +264,6 @@ public class DentalSystem {
             System.out.println(E);
         }
     }//end cleanScreen method
+
 
 }
