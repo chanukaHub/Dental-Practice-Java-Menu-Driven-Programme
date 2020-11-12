@@ -44,7 +44,8 @@ public class Dentist extends Staff{
 
     @Override
     public String toString() {
-        return "Dentist{" + "qualification=" + qualification + ", councilRegNumber=" + councilRegNumber + ", dateAwarded=" + dateAwarded + '}';
+        String msg =super.toString();
+        return  msg + ", qualification=" + qualification + ", councilRegNumber=" + councilRegNumber + ", dateAwarded=" + dateAwarded;
     }
     
     

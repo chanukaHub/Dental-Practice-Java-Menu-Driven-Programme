@@ -1,5 +1,6 @@
 package dentalsystem;
 
+import java.io.IOException;
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -43,6 +44,7 @@ public class DentalSystem {
                 String userInput = myScanner.nextLine();
                 option= Integer.parseInt(userInput);
                 if(option<=7 && option>=0 ){
+                    cleanScreean();
                     selectedOption(option);
                 }
                 else{
@@ -56,9 +58,11 @@ public class DentalSystem {
 
     private static void selectedOption(int option) {
         switch(option){
-            case 1:{
+            case 1:
                 addStaff();
-            }
+                break;
+            case 5:
+                displayDentistList();
         
         }
     }
@@ -66,6 +70,10 @@ public class DentalSystem {
     private static void addStaff() {
         int option;
         Scanner myScanner = new Scanner(System.in);
+        System.out.println(" ");
+        System.out.println("-------------------------------------");
+        System.out.println("\tDental System");
+        System.out.println("-------------------------------------");
         System.out.println("[1] Add Dentist");
         System.out.println("[2] Add Receptionist");
         System.out.println("[0] Exit");
@@ -96,7 +104,8 @@ public class DentalSystem {
     }
 
     private static void addDentist() {
-        String name, gender, telephone, nextOfKin, qulification,date,addressNo,addressLane,addressTown,check ="true";
+        String name, gender, telephone, nextOfKin, qulification,date,addressNo,addressLane,addressTown;
+        int councilNumber;
         Date date2=null;
         Address address;
         Scanner myScanner = new Scanner(System.in);
@@ -112,6 +121,7 @@ public class DentalSystem {
         address = new Address(addressNo,addressLane,addressTown);
         
         System.out.println("Enter Gender:");
+        gender = myScanner.nextLine();
         
         while(true) {
         System.out.println("Phone Number:");
@@ -130,16 +140,33 @@ public class DentalSystem {
         System.out.println("enter next of kin:");
         nextOfKin = myScanner.nextLine();
         
-        System.out.println("Awarded Date: ");
-        date = myScanner.nextLine();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
-        try {
-            //Parsing the String
-            date2 = dateFormat.parse(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        System.out.println("Qulification :");
+        qulification = myScanner.nextLine();
+        
+        while(true){
+            System.out.println("Council Regisration Number:");
+            try {
+                String num = myScanner.nextLine();
+                councilNumber = Integer.parseInt(num);
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid number");
+            }
         }
         
+        while(true){
+            System.out.println("Awarded Date: ");
+            date = myScanner.nextLine();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                //Parsing the String
+                date2 = dateFormat.parse(date);
+                break;
+            } catch (ParseException e) {
+                System.out.println("Invalid date format use yyyy-MM-dd");
+            }
+        }
+        dentistList.add(new Dentist(qulification, councilNumber, date2, 1000, name, address, gender, telephone, nextOfKin));
     }
 
     private static void addReceptionist() {
@@ -149,5 +176,28 @@ public class DentalSystem {
     private static int stopSystem() {
         return 0;
     }
+
+    private static void displayDentistList() {
+        System.out.println("Dentist List\n________________________________\n");
+        for(int i =0; i< dentistList.size(); i++){
+            System.out.println(i+1+". "+ dentistList.get(i).toString());
+        }
+        waitForEnter();
+        
+    }
+    public static void waitForEnter() {
+        Scanner myScanner = new Scanner(System.in);
+        System.out.print("Press any key to continue . . . ");
+        myScanner.nextLine();
+        cleanScreean();
+    }
     
+    public static void cleanScreean() { 
+        try {
+            new ProcessBuilder("cmd","/c","cls").inheritIO().start().waitFor() ;
+        } catch(IOException | InterruptedException E) {
+            System.out.println(E);
+        }
+    }//end cleanScreen method
+
 }

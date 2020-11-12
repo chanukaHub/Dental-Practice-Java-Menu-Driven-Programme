@@ -45,7 +45,7 @@ public class Address {
      
      @Override
     public String toString() {
-        return "Address{" + "no=" + no + ", lane=" + lane + ", town=" + town + '}';
+        return "(" + "no=" + no + ", lane=" + lane + ", town=" + town + ')';
     }
      
 }
