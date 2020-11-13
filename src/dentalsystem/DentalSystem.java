@@ -11,8 +11,8 @@ import java.util.regex.Pattern;
 
 public class DentalSystem {
 
-    private static int staffCount=0;
-    private static int patientCount=0;
+    private static int staffCount=2;
+    private static int patientCount=1;
     private static ArrayList<Address> addressList = new ArrayList<Address>();
     private static ArrayList<Appointment> appointmentList = new ArrayList<Appointment>();
     private static ArrayList<Dentist> dentistList = new ArrayList<Dentist>();
@@ -22,7 +22,7 @@ public class DentalSystem {
     public static void main(String[] args) {
         int option;
         Scanner myScanner = new Scanner(System.in);
-        
+        SetupInitialUsers();
         while (true) {
             System.out.println(" ");
             System.out.println("-------------------------------------");
@@ -56,6 +56,12 @@ public class DentalSystem {
             }
         }
     }
+    
+    private static void SetupInitialUsers() {
+        dentistList.add(new Dentist(null, 0, null, 1001, "testDentist" , null, null, null, null));
+        receptionistList.add(new Receptionist(1002, "testReseptionist", null, null, null, null, null, null));
+        patientList.add(new Patient("testPatient", null, null, 10001, null));
+    }
 
     private static void selectedOption(int option) {
         switch(option){
@@ -65,6 +71,9 @@ public class DentalSystem {
             case 2:
                 addPatient();
                 break;
+            case 3:
+                makeAnAppoinment();
+                break;
             case 4:
                 displayPatientList();
                 break;
@@ -73,6 +82,9 @@ public class DentalSystem {
                 break;
             case 6:
                 displayReceptionistList();
+                break;
+            case 7:
+                displayAppoinmentList();
                 break;
         }
     }
@@ -241,7 +253,6 @@ public class DentalSystem {
     
     private static void addPatient() {
         String name, mobile ,addressNo,addressLane,addressTown;
-        
         Address address;
         Scanner myScanner = new Scanner(System.in);
         System.out.println("Add Patient\n________________________________\n");
@@ -275,6 +286,67 @@ public class DentalSystem {
         patientList.add(patient);
     }
     
+    private static void makeAnAppoinment() {
+        Scanner myScanner= new Scanner(System.in);
+        Date appoinmentDate;
+        String date;
+        Dentist selectedDentist = null;
+        Patient selectedPatient = null;
+        Appointment appointment = new Appointment();
+        while(true){
+            System.out.println("Appoinment Date: ");
+            date = myScanner.nextLine();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                //Parsing the String
+                appoinmentDate = dateFormat.parse(date);
+                appointment.setDate(appoinmentDate);
+                break;
+            } catch (ParseException e) {
+                System.out.println("Invalid date format use yyyy-MM-dd");
+            }
+        }
+        do{
+            System.out.println("Select Dentist:");
+            displayAllDentistList();
+            System.out.println("Enter Dentist Id: ");
+            String dentistId = myScanner.nextLine();
+            selectedDentist = getDentistFromId(Integer.parseInt(dentistId));
+        }while (selectedDentist == null);
+        appointment.setDentist(selectedDentist);
+        
+        do{
+            System.out.println("Select Patient:");
+            displayAllPatientList();
+            System.out.println("Enter patient Number: ");
+            String patientId = myScanner.nextLine();
+            selectedPatient = getPatientFromId(Integer.parseInt(patientId));
+        }while (selectedPatient == null);
+        appointment.setPatient(selectedPatient);
+        
+    }
+    
+    private static Dentist getDentistFromId(int dentistId) {
+        for(int i=0; i< dentistList.size();i++){
+            if(dentistList.get(i).getEmpNumber()== dentistId){
+                return dentistList.get(i);
+            }
+        }
+        return null;
+    }
+    
+    private static Patient getPatientFromId(int patientId) {
+        for(int i=0; i< patientList.size();i++){
+            if(patientList.get(i).getPatientNumber()== patientId){
+                return patientList.get(i);
+            }
+        }
+        return null;
+    }
+    
+    private static void displayAppoinmentList() {
+        
+    }
 
     private static int stopSystem() {
         return 0;
@@ -294,6 +366,18 @@ public class DentalSystem {
             System.out.println(i+1 +". "+ dentistList.get(i).toString());
         }
         waitForEnter(); 
+    }
+    
+    private static void displayAllPatientList() {
+        for(int i =0; i< patientList.size(); i++){
+            System.out.println(i+1 +". "+ patientList.get(i).toString());
+        }
+    }
+
+    private static void displayAllDentistList() {
+        for(int i =0; i< dentistList.size(); i++){
+            System.out.println(i+1 +". "+ dentistList.get(i).toString());
+        }
     }
     
     private static void displayReceptionistList() {
@@ -318,8 +402,6 @@ public class DentalSystem {
             System.out.println(E);
         }
     }//end cleanScreen method
-
-    
 
     
 }

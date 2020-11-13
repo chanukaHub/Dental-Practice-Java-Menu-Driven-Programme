@@ -10,6 +10,11 @@ public class Appointment {
     private Patient patient;
 
     public Appointment() {
+        this.setDate(null);
+        this.setCost(2000);
+        this.setAttendance(false);
+        this.setDentist(null);
+        this.setPatient(null);
     }
 
     public Appointment(Date date, double cost, Boolean attendance, Dentist dentist, Patient patient) {
@@ -62,7 +67,7 @@ public class Appointment {
 
     @Override
     public String toString() {
-        return "Appointment{" + "date=" + date + ", cost=" + cost + ", attendance=" + attendance + ", dentist=" + dentist + ", patient=" + patient + '}';
+        return "date=" + date + ", cost=" + cost + ", attendance=" + attendance + ", dentist=" + dentist + ", patient=" + patient ;
     }
     
 }
