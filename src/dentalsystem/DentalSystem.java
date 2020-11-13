@@ -65,6 +65,9 @@ public class DentalSystem {
             case 2:
                 addPatient();
                 break;
+            case 4:
+                displayPatientList();
+                break;
             case 5:
                 displayDentistList();
                 break;
@@ -276,6 +279,14 @@ public class DentalSystem {
     private static int stopSystem() {
         return 0;
     }
+    
+    private static void displayPatientList() {
+        System.out.println("Patient List\n________________________________\n");
+        for(int i =0; i< patientList.size(); i++){
+            System.out.println(i+1 +". "+ patientList.get(i).toString());
+        }
+        waitForEnter(); 
+    }
 
     private static void displayDentistList() {
         System.out.println("Dentist List\n________________________________\n");
@@ -307,6 +318,8 @@ public class DentalSystem {
             System.out.println(E);
         }
     }//end cleanScreen method
+
+    
 
     
 }
