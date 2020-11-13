@@ -86,6 +86,9 @@ public class DentalSystem {
             case 7:
                 displayAppoinmentList();
                 break;
+            case 0:
+                stopSystem();
+                break;
         }
     }
 
@@ -314,7 +317,7 @@ public class DentalSystem {
         do{
             System.out.println("Select Dentist:");
             displayAllDentistList();
-            System.out.println("Enter Dentist Id: ");
+            System.out.println("Enter Employee Number: ");
             String dentistId = myScanner.nextLine();
             selectedDentist = getDentistFromId(Integer.parseInt(dentistId));
         }while (selectedDentist == null);
