@@ -255,6 +255,7 @@ public class DentalSystem {
         String name, mobile ,addressNo,addressLane,addressTown;
         Address address;
         Scanner myScanner = new Scanner(System.in);
+        ArrayList<Appointment> selectedAppointments = new ArrayList<>();
         System.out.println("Add Patient\n________________________________\n");
         System.out.println("Name:");
         name = myScanner.nextLine();
@@ -284,9 +285,13 @@ public class DentalSystem {
         patientCount++;
         Patient patient = new Patient(name, address, mobile, (10000+patientCount), null);
         patientList.add(patient);
+        
+        Appointment appointment=makeAnAppoinment();
+        selectedAppointments.add(appointment);
+        patient.setAppoinments(selectedAppointments);
     }
     
-    private static void makeAnAppoinment() {
+    private static Appointment makeAnAppoinment() {
         Scanner myScanner= new Scanner(System.in);
         Date appoinmentDate;
         String date;
@@ -325,6 +330,7 @@ public class DentalSystem {
         appointment.setPatient(selectedPatient);
         
         appointmentList.add(appointment);
+        return appointment;
         
     }
     

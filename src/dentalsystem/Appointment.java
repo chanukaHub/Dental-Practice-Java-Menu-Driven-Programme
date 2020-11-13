@@ -67,7 +67,7 @@ public class Appointment {
 
     @Override
     public String toString() {
-        return "date=" + date + ", cost=" + cost + ", attendance=" + attendance + ", dentist=" + dentist + ", patient=" + patient ;
+        return "date=" + date + ", cost=" + cost + ", attendance=" + attendance + ", dentist=" + dentist.getName() + ", patient=" + patient.getName() ;
     }
     
 }
