@@ -324,6 +324,8 @@ public class DentalSystem {
         }while (selectedPatient == null);
         appointment.setPatient(selectedPatient);
         
+        appointmentList.add(appointment);
+        
     }
     
     private static Dentist getDentistFromId(int dentistId) {
@@ -342,10 +344,6 @@ public class DentalSystem {
             }
         }
         return null;
-    }
-    
-    private static void displayAppoinmentList() {
-        
     }
 
     private static int stopSystem() {
@@ -368,12 +366,20 @@ public class DentalSystem {
         waitForEnter(); 
     }
     
+     private static void displayAppoinmentList() {
+        System.out.println("Appointment List\n________________________________\n");
+        for(int i =0; i< appointmentList.size(); i++){
+            System.out.println(i+1 +". "+ appointmentList.get(i).toString());
+        }
+         waitForEnter(); 
+    }
+    
     private static void displayAllPatientList() {
         for(int i =0; i< patientList.size(); i++){
             System.out.println(i+1 +". "+ patientList.get(i).toString());
         }
     }
-
+    
     private static void displayAllDentistList() {
         for(int i =0; i< dentistList.size(); i++){
             System.out.println(i+1 +". "+ dentistList.get(i).toString());
