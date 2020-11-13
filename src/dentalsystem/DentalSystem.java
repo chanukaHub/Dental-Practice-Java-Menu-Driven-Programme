@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 public class DentalSystem {
 
     private static int staffCount=0;
+    private static int patientCount=0;
     private static ArrayList<Address> addressList = new ArrayList<Address>();
     private static ArrayList<Appointment> appointmentList = new ArrayList<Appointment>();
     private static ArrayList<Dentist> dentistList = new ArrayList<Dentist>();
@@ -60,6 +61,9 @@ public class DentalSystem {
         switch(option){
             case 1:
                 addStaff();
+                break;
+            case 2:
+                addPatient();
                 break;
             case 5:
                 displayDentistList();
@@ -112,6 +116,7 @@ public class DentalSystem {
         Date date2=null;
         Address address;
         Scanner myScanner = new Scanner(System.in);
+        System.out.println("Add Dentist\n________________________________\n");
         System.out.println("Name:");
         name = myScanner.nextLine();
         
@@ -179,6 +184,7 @@ public class DentalSystem {
         Date courseAttendedDate=null;
         Address address;
         Scanner myScanner = new Scanner(System.in);
+        System.out.println("Add Receptionist\n________________________________\n");
         System.out.println("Name:");
         name = myScanner.nextLine();
         
@@ -229,6 +235,43 @@ public class DentalSystem {
         staffCount++;
         receptionistList.add(new Receptionist((1000+staffCount), name, address, gender, telephone, nextOfKin, courseAttendedDate, courseProvider));
     }
+    
+    private static void addPatient() {
+        String name, mobile ,addressNo,addressLane,addressTown;
+        
+        Address address;
+        Scanner myScanner = new Scanner(System.in);
+        System.out.println("Add Patient\n________________________________\n");
+        System.out.println("Name:");
+        name = myScanner.nextLine();
+        
+        System.out.println("Enter Address\nNo:");
+        addressNo = myScanner.nextLine();
+        System.out.println("Lane:");
+        addressLane= myScanner.nextLine();
+        System.out.println("Town:");
+        addressTown= myScanner.nextLine();
+        address = new Address(addressNo,addressLane,addressTown);
+        
+        while(true) {
+        System.out.println("mobile Number:");
+        mobile= myScanner.nextLine();
+        String patterns = "\\d{10}|(?:\\d{3}-){2}\\d{4}|\\(\\d{3}\\)\\d{3}-?\\d{4}";
+        //matches 1234567890 , 123-456-7890 , (123)456-7890 or (123)4567890
+        Pattern pattern = Pattern.compile(patterns);
+        
+        Matcher matcher = pattern.matcher(mobile);
+        if (matcher.matches()) {
+            break;
+        }else{
+            System.out.println("Phone Number Format invalid ");
+        }}
+        
+        patientCount++;
+        Patient patient = new Patient(name, address, mobile, (10000+patientCount), null);
+        patientList.add(patient);
+    }
+    
 
     private static int stopSystem() {
         return 0;
@@ -265,5 +308,5 @@ public class DentalSystem {
         }
     }//end cleanScreen method
 
-
+    
 }

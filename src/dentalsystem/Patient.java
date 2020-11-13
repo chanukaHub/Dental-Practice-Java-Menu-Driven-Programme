@@ -7,19 +7,20 @@ public class Patient {
     private Address address;
     private String mobile;
     private int patientNumber;
-    private int countOfPatient;
+    private static int countOfPatient =0;
     private List<Appointment> appoinments;
 
     public Patient() {
+        this.countOfPatient++;
     }
 
-    public Patient(String name, Address address, String mobile, int patientNumber, int countOfPatient, List<Appointment> appoinments) {
+    public Patient(String name, Address address, String mobile, int patientNumber, List<Appointment> appoinments) {
         this.setName(name);
         this.setAddress(address);
         this.setMobile(mobile);
         this.setPatientNumber(patientNumber);
-        this.setCountOfPatient(countOfPatient);
         this.setAppoinments(appoinments);
+        this.countOfPatient++;
     }
 
     public String getName() {
